@@ -12,6 +12,8 @@ Features:
   - `bundle gem` now supports a `--rubocop` flag that adds the `rubocop` gem to the new gem layout [#6455](https://github.com/rubygems/bundler/pull/6455)
   - `bundle gem` now supports `--test-unit` in addition to `rspec` and `minitest` as a value for its `--test` option [#5521](https://github.com/rubygems/bundler/pull/5521)
   - `bundle install` now uses the available number of processors automatically for concurrent gem install [#3393](https://github.com/rubygems/rubygems/pull/3393)
+  - Report Gitlab CI within bundler user-agent string [#3432](https://github.com/rubygems/rubygems/pull/3432)
+  - Add `bundle plugin uninstall` [#3482](https://github.com/rubygems/rubygems/pull/3482)
 
 Improvements:
 
@@ -33,6 +35,12 @@ Bugfixes:
   - Fix `init_gems_rb` setting being ignored by `bundle gem` [#7629](https://github.com/rubygems/bundler/pull/7629)
   - Fix "unresolvable warning" being printed on `bundle install` of multipliplatform `gems.rb` files without lockfiles, multiplatform is now managed automatically [#7580](https://github.com/rubygems/bundler/pull/7580)
   - Fix setting the number of `--jobs` to be one unit less than specified to the CLI [#3393](https://github.com/rubygems/rubygems/pull/3393)
+  - Fix extension building when the same git source specifies several gems with extensions [#3475](https://github.com/rubygems/rubygems/pull/3475)
+  - Fix uninitialized instance variable warning under ruby-head (2.8-dev) [#3477](https://github.com/rubygems/rubygems/pull/3477)
+  - Fix double chdir warning while installing a git gem with extensions [#3479](https://github.com/rubygems/rubygems/pull/3479)
+  - Fix some deprecations not showing up when CLI flags passed as `--flag=value` [#3561](https://github.com/rubygems/rubygems/pull/3561)
+  - Fix man pages display when bundler installed as a default gem [#3562](https://github.com/rubygems/rubygems/pull/3562)
+  - Fix bundler gem tasks not handling relative paths [#3586](https://github.com/rubygems/rubygems/pull/3586)
 
 ## 2.1.4 (January 5, 2020)
 
