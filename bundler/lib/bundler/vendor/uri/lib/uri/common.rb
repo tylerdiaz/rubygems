@@ -3,7 +3,6 @@
 # = uri/common.rb
 #
 # Author:: Akira Yamada <akira@ruby-lang.org>
-# Revision:: $Id$
 # License::
 #   You can redistribute it and/or modify it under the same term as Ruby.
 #
@@ -99,7 +98,7 @@ module Bundler::URI
     #   # => "@%3F@%21"
     #
     def escape(*arg)
-      warn "Bundler::URI.escape is obsolete", uplevel: 1
+      warn "Bundler::URI.#{__callee__} is obsolete", uplevel: 1
       DEFAULT_PARSER.escape(*arg)
     end
     alias encode escape
@@ -130,7 +129,7 @@ module Bundler::URI
     #   # => "http://example.com/?a=\t\r"
     #
     def unescape(*arg)
-      warn "Bundler::URI.unescape is obsolete", uplevel: 1
+      warn "Bundler::URI.#{__callee__} is obsolete", uplevel: 1
       DEFAULT_PARSER.unescape(*arg)
     end
     alias decode unescape
@@ -143,6 +142,20 @@ module Bundler::URI
   # Returns a Hash of the defined schemes.
   def self.scheme_list
     @@schemes
+  end
+
+  #
+  # Construct a Bundler::URI instance, using the scheme to detect the appropriate class
+  # from +Bundler::URI.scheme_list+.
+  #
+  def self.for(scheme, *arguments, default: Generic)
+    if scheme
+      uri_class = @@schemes[scheme.upcase] || default
+    else
+      uri_class = default
+    end
+
+    return uri_class.new(scheme, *arguments)
   end
 
   #
