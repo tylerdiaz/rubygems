@@ -9,7 +9,15 @@ class TestGemPackageTask < Gem::TestCase
     super
 
     Rake.application = Rake::Application.new
+
+    @prev_rake_fileutils_verbosity = RakeFileUtils.verbose_flag
     RakeFileUtils.verbose_flag = false
+  end
+
+  def teardown
+    RakeFileUtils.verbose_flag = @prev_rake_fileutils_verbosity
+
+    super
   end
 
   def test_gem_package
