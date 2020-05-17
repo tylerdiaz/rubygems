@@ -93,10 +93,10 @@ module Bundler
 
     def _remote_specification
       @_remote_specification ||= begin
-        rs = @stub.to_spec
+        rs = stub.to_spec
         if rs.equal?(self) # happens when to_spec gets the spec from Gem.loaded_specs
-          rs = Bundler.load_gemspec(@stub.loaded_from)
-          Bundler.rubygems.stub_set_spec(@stub, rs)
+          rs = Gem::Specification.load(stub.loaded_from)
+          Bundler.rubygems.stub_set_spec(stub, rs)
         end
 
         unless rs
