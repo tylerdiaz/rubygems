@@ -11,8 +11,7 @@ module Bundler
       spec
     end
 
-    attr_accessor :ignored
-    attr_writer :stub
+    attr_accessor :stub, :ignored
 
     def source=(source)
       super
@@ -31,7 +30,9 @@ module Bundler
 
     # This is defined directly to avoid having to load every installed spec
     def missing_extensions?
-      stub(true).missing_extensions?
+      _remote_specification if Gem.loaded_specs[name].equal?(self)
+
+      stub.missing_extensions?
     end
 
     def activated
@@ -70,18 +71,6 @@ module Bundler
 
     def raw_require_paths
       stub.raw_require_paths
-    end
-
-    # @note
-    #   Cannot be an attr_reader that returns @stub, because the stub can pull it's `to_spec`
-    #   from `Gem.loaded_specs`, which can end up being self.
-    #   #_remote_specification has logic to handle this case, so delegate to that in that situation,
-    #   because otherwise we can end up with a stack overflow when calling #missing_extensions?
-    def stub(check = false)
-      if check && Gem.loaded_specs[name].equal?(self)
-        _remote_specification
-      end
-      @stub
     end
 
   private
