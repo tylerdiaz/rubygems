@@ -11,11 +11,6 @@ module Bundler
       spec
     end
 
-    def initialize(*)
-      @_remote_specification = nil
-      super
-    end
-
     attr_accessor :ignored
     attr_writer :stub
 
@@ -83,7 +78,7 @@ module Bundler
     #   #_remote_specification has logic to handle this case, so delegate to that in that situation,
     #   because otherwise we can end up with a stack overflow when calling #missing_extensions?
     def stub(check = false)
-      if check && @_remote_specification.nil? && Gem.loaded_specs[name].equal?(self)
+      if check && Gem.loaded_specs[name].equal?(self)
         _remote_specification
       end
       @stub
